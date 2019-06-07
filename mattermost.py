@@ -49,7 +49,7 @@ def _config():
     except Exception as err:
         log.error('Failed to read configuration for Mattermost! %s: %s',
                   type(err).__name__, err)
-        raise salt.exceptions.CommandExecutionError(err)
+        raise CommandExecutionError(err)
 
     config = master_opts.get('mattermost', {})
     return config
