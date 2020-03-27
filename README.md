@@ -12,7 +12,7 @@ This module requires a configuration profile to be configured in either the mini
 This profile requires very little:
 
     mattermost:
-      api_url: https://slack.mydomain.com
+      url: https://slack.mydomain.com
       hook: 3tdgo8restnxiykdx88wqtxryr
 
 This Python module should be saved as `salt/_modules/mattermost.py`.
@@ -28,7 +28,7 @@ Returns True if message was sent successfully, False otherwise.
 
 Optional parameters:
 
-    api_url:     The Mattermost api url, if not specified in the configuration.
+    url:         The Mattermost url, if not specified in the configuration.
     channel:     An optional Mattermost channel ID.
     hook:        The Mattermost hook, if not specified in the configuration.
     icon_url:    An optional URL to a custom icon to be used.

@@ -12,7 +12,7 @@ This profile requires very little:
 .. code-block:: yaml
 
     mattermost:
-      api_url: https://slack.mydomain.com
+      url: https://slack.mydomain.com
       hook: 3tdgo8restnxiykdx88wqtxryr
 
 This file should be saved as salt/_modules/mattermost.py
@@ -68,18 +68,18 @@ def _get_hook():
     return hook
 
 
-def _get_api_url():
+def _get_url():
     '''
-    Retrieves and return the Mattermost's configured api url
+    Retrieves and return the Mattermost's configured url
 
-    :return:            String: the api url string
+    :return:            String: the url string
     '''
     mattermost_config = _config()
-    api_url = mattermost_config.get('api_url', None)
-    if not api_url:
-        raise SaltInvocationError('No Mattermost API URL found')
+    url = mattermost_config.get('url', None)
+    if not url:
+        raise SaltInvocationError('No Mattermost URL found in the configuration')
 
-    return api_url
+    return url
 
 def _mattermost_query(url, message, channel, icon_url, username):
     '''
@@ -114,7 +114,7 @@ def _mattermost_query(url, message, channel, icon_url, username):
     return True
 
 def post_message(message,
-                 api_url=None,
+                 url=None,
                  channel=None,
                  hook=None,
                  icon_url=None,
@@ -123,7 +123,7 @@ def post_message(message,
     Send a message to a Mattermost channel.
 
     :param message:     The message to send to the Mattermost channel.
-    :param api_url:     The Mattermost api url, if not specified in the configuration.
+    :param url:         The Mattermost url, if not specified in the configuration.
     :param channel:     An optional Mattermost channel ID.
     :param hook:        The Mattermost hook, if not specified in the configuration.
     :param icon_url:    An optional URL to a custom icon to be used.
@@ -137,8 +137,8 @@ def post_message(message,
         salt '*' mattermost.post_message message='Build is done'
     '''
 
-    if not api_url:
-        api_url = _get_api_url()
+    if not url:
+        url = _get_url()
 
     if not hook:
         hook = _get_hook()
@@ -146,7 +146,7 @@ def post_message(message,
     if not message:
         log.error('message is a required option.')
 
-    base_url = _urljoin(api_url, '/hooks/')
+    base_url = _urljoin(url, '/hooks/')
     url = _urljoin(base_url, six.text_type(hook))
 
     res = _mattermost_query(url,
