@@ -29,9 +29,6 @@ import requests
 # Import Salt libs
 import salt.config
 from salt.exceptions import CommandExecutionError
-from salt.exceptions import SaltInvocationError
-from salt.ext.six.moves.urllib.parse import urljoin as _urljoin
-from salt.ext import six
 
 log = logging.getLogger(__name__)
 
